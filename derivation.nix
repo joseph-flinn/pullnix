@@ -1,7 +1,7 @@
 { lib, python3Packages }:
 with python3Packages;
 buildPythonApplication {
-  pname = "nix-operator";
+  pname = "pullnix";
   version = "0.1";
 
   propagatedBuildInputs = [ fastapi pytest ];
