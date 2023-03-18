@@ -35,3 +35,18 @@ would work well if pixiecore is ran with ansible similar to https://github.com/k
 This would also remove the requirement for a public api on each node. It could be constrained to
 only a localhost api that could be hit from SSH
 
+
+
+## Development
+### Requirements
+- NixPkgs && `nix-shell`
+
+### Run
+
+```
+# Load development environment
+nix-shell
+
+# Run the application in development mode
+uvicorn src.app:app --reload
+```
