@@ -1,20 +1,3 @@
-#with import <nixpkgs> {};
-#let
-#  pythonEnv = python310.withPackages(ps: with ps; [
-#    fastapi
-#    uvicorn
-#
-#    black
-#    pytest
-#  ]);
-#  myProject = pkgs.callPackage ./derivation.nix {};
-#in mkShell {
-#  packages = [
-#    pythonEnv
-#    myProject
-#  ];
-#}
-
 with import <nixpkgs> {};
 with pkgs.python310Packages;
 
@@ -23,8 +6,13 @@ let
     pkgs = pkgs;
     buildPythonApplication = buildPythonApplication; 
   };
+  pythonEnv = with pkgs.python310Packages; [
+    black
+    pytest
+  ];
 in mkShell {
   buildInputs = [
+    pythonEnv
     pullnix
   ];
 }

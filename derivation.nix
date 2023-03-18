@@ -6,7 +6,6 @@ buildPythonApplication rec {
 
   src = ./.;
 
-  buildInputs = [ pytest black ];
   propagatedBuildInputs = [ fastapi uvicorn ];
 
   doCheck = false;
