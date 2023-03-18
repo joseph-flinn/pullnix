@@ -55,5 +55,8 @@ only a localhost api that could be hit from SSH
 nix-shell
 
 # Run the application in development mode
-uvicorn src.app:app --reload
+pullnix --version
 ```
+
+**Note:** I couldn't get the develop mode working with Nix...so every change has to be rebuilt by
+exiting `nix-shell` and re-entering it
