@@ -7,7 +7,7 @@ from ..__about__ import __version__
 from .list import command_list, create_list_subparser
 #from .status import command_status, create_status_subparser
 #from .refresh import command_refresh, create_refresh_subparser
-#from .serve import command_serve, create_serve_subparser
+from .serve import CLIServeNamespace, command_serve, create_serve_subparser
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -24,6 +24,17 @@ def create_parser() -> argparse.ArgumentParser:
     list_parser = subparsers.add_parser("list", help="List configured NixOS Pull agents")
     create_list_subparser(list_parser)
 
+    #status_parser = subparsers.add_parser("status", help="Get status of a selected NixOS Pull system")
+    #create_status_subparser(status_parser)
+
+    #refresh_parser = subparsers.add_parser(
+    #    "refresh",
+    #    help="Force a NixOS Pull agent to sync with the target git repository"
+    #)
+    #create_refresh_subparser(refresh_parser)
+
+    serve_parser = subparsers.add_parser("serve", help="start a NixOS Pull agent")
+    create_serve_subparser(serve_parser)
 
     return parser
 
@@ -51,6 +62,6 @@ def cli(_args: t.Optional[t.List[str]] = None) -> None:
         pass
     elif args.subparser_name == "refresh":
         pass
-    elif args.sub_parser == "serve":
-        pass
+    elif args.subparser_name == "serve":
+        command_serve(CLIServeNamespace(**vars(args), parser=parser))
 
