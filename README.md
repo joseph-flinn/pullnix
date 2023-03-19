@@ -25,10 +25,10 @@ Once the pullnix is running, it will poll the repo every 5 minutes for a configu
 | command + options | description |
 | ----------------- | ----------- |
 | `list` | lists all of the machines currently being tracked by `nixctl` |
-| `status --all` | Get the status of all of the machines currently being tracked |
+| `status` | Get the status of all of the machines currently being tracked |
 | `status <target>` | Get the status of all of the machines currently being tracked |
+| `refresh <target>` | Force target operator to check for updates in the git repo |
 | `refresh --all` | Force all operators to check for updates in the git repo |
-| `refresh <target>` | Force all operators to check for updates in the git repo |
 | `serve` | Run the api. Intended to be run on an endpoint |
 
 
