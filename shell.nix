@@ -9,6 +9,7 @@ let
   pythonEnv = with pkgs.python310Packages; [
     black
     pytest
+    pytest-asyncio
   ];
 in mkShell {
   buildInputs = [
