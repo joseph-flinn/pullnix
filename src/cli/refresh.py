@@ -14,7 +14,7 @@ def create_refresh_subparser(
     parser.add_argument(
         "--target",
         type=str,
-        help="NixOS agent to send a refresh request to"
+        help="NixOS agent to send the refresh request to"
     )
     parser.add_argument(
         "--all",
@@ -22,6 +22,7 @@ def create_refresh_subparser(
         default=False,
         const=True
     )
+
     return parser
 
 
