@@ -32,7 +32,7 @@ import pytest
 from _pytest.capture import CaptureFixture
 from _pytest.logging import LogCaptureFixture
 
-from src.tasks import repeat_every
+from src.api.tasks import repeat_every
 
 logging.basicConfig(level=logging.INFO)
 

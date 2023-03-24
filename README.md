@@ -64,6 +64,7 @@ exiting `nix-shell` and re-entering it
 
 ### TODO
 
+- [ ] Implement the Polling task
 - [ ] Implement `list` in API and CLI
 - [ ] Implement `status` in API and CLI
 - [ ] Implement `refresh` in API and CLI
