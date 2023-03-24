@@ -24,7 +24,7 @@ Once the pullnix is running, it will poll the repo every 5 minutes for a configu
 
 | command + options | description |
 | ----------------- | ----------- |
-| `list` | lists all of the machines currently being tracked by `nixctl` |
+| `list` | lists all of the machines currently being tracked by `pullnix` |
 | `status` | Get the status of all of the machines currently being tracked |
 | `status <target>` | Get the status of all of the machines currently being tracked |
 | `refresh <target>` | Force target operator to check for updates in the git repo |
@@ -60,3 +60,10 @@ pullnix --version
 
 **Note:** I couldn't get the develop mode working with Nix...so every change has to be rebuilt by
 exiting `nix-shell` and re-entering it
+
+
+### TODO
+
+- [ ] Implement `list` in API and CLI
+- [ ] Implement `status` in API and CLI
+- [ ] Implement `refresh` in API and CLI

@@ -32,12 +32,12 @@ def command_refresh(
 ) -> None:
     if args.target and args.all:
         print(f"Cannot use both <target> and --all")
-        os.exit(1)
+        exit(1)
     elif args.target:
         print(f"Command: refresh\nTarget: {args.target}")
     elif args.all:
         print(f"Command: refresh\nTarget: all")
     else:
         print(f"Please specific either <target> or set --all")
-        os.exit(1)
+        exit(1)
 
