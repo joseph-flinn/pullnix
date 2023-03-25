@@ -1,10 +1,12 @@
-session_name: 'pullnix'
+session_name: pullnix
 windows:
-- window_name: bash
-  focus: 'true'
-  layout: bb9c,225x76,0,0[225x57,0,0,0,225x18,0,58,2]
+- focus: 'true'
+  layout: 9d1e,225x76,0,0[225x57,0,0,1,225x18,0,58{112x18,0,58,2,112x18,113,58,6}]
   options: {}
   panes:
-  - 
+  - nvim README.md
   - focus: 'true'
+    shell_command: nix-shell
+  - nix-shell
   start_directory: /home/joseph/projects/pullnix
+  window_name: dev
