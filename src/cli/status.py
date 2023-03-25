@@ -19,6 +19,7 @@ def create_status_subparser(
 
 
 def command_status(
+    config: dict,
     args: CLIStatusNamespace,
     parser: t.Optional[argparse.ArgumentParser] = None
 ) -> None:

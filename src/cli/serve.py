@@ -10,6 +10,28 @@ class CLIServeNamespace(argparse.Namespace):
     port: t.Optional[int]
 
 
+def get_host(
+    config: dict,
+    args: CLIServeNamespace
+) -> str:
+    if args.host != "127.0.0.1":
+        return args.host
+    if "serve" in config and "host" in config["serve"]:
+        return config["serve"]["host"]
+    return "127.0.0.1"
+
+
+def get_port(
+    config: dict,
+    args: CLIServeNamespace
+) -> str:
+    if args.port != 8000:
+        return args.port
+    if "serve" in config and "port" in config["serve"]:
+        return config["serve"]["port"]
+    return 8000
+
+
 def create_serve_subparser(
     parser: argparse.ArgumentParser,
 ) -> argparse.ArgumentParser:
@@ -30,7 +52,8 @@ def create_serve_subparser(
 
 
 def command_serve(
+    config: dict,
     args: CLIServeNamespace,
     parser: t.Optional[argparse.ArgumentParser] = None
 ) -> None:
-    uvicorn.run(app, host=args.host, port=args.port)
+    uvicorn.run(app, host=get_host(config, args), port=get_port(config, args))

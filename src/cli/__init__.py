@@ -1,4 +1,5 @@
 import argparse
+import json
 import logging
 import typing as t
 
@@ -10,6 +11,12 @@ from .refresh import CLIRefreshNamespace, command_refresh, create_refresh_subpar
 from .serve import CLIServeNamespace, command_serve, create_serve_subparser
 
 
+def load_config(config: str) -> dict:
+    with open(config, 'r') as config_file:
+        return json.load(config_file)
+
+
+
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="pullnix")
     parser.add_argument(
@@ -17,6 +24,12 @@ def create_parser() -> argparse.ArgumentParser:
         "-V",
         action="version",
         version=f"%(prog)s {__version__}",
+    )
+    parser.add_argument(
+        "--config",
+        type=str,
+        help="Configuration file for pullnix",
+        default="config.json"
     )
 
     subparsers = parser.add_subparsers(dest="subparser_name")
@@ -44,6 +57,7 @@ class CLINamespace(argparse.Namespace):
     subparser_name: "CLISubparserName"
     import_subparser_name: t.Optional["CLIImportSubparserName"]
     version: bool
+    config: str
 
 
 ns = CLINamespace()
@@ -52,24 +66,31 @@ ns = CLINamespace()
 def cli(_args: t.Optional[t.List[str]] = None) -> None:
     parser = create_parser()
     args = parser.parse_args(_args, namespace=ns)
+    configs = load_config(args.config)
 
     if args.subparser_name is None:
         parser.print_help()
         return
     elif args.subparser_name == "list":
-        command_list(parser=parser)
+        command_list(
+            configs,
+            parser=parser
+        )
     elif args.subparser_name == "status":
         command_status(
+            configs,
             CLIStatusNamespace(**vars(args)),
             parser=parser
         )
     elif args.subparser_name == "refresh":
         command_refresh(
+            configs,
             CLIRefreshNamespace(**vars(args)),
             parser=parser
         )
     elif args.subparser_name == "serve":
         command_serve(
+            configs,
             CLIServeNamespace(**vars(args)),
             parser=parser
         )

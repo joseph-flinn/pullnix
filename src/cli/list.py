@@ -8,6 +8,10 @@ def create_list_subparser(
     return parser
 
 
-def command_list(parser: t.Optional[argparse.ArgumentParser] = None) -> None:
-    print("Running command: list")
+def command_list(
+    config: dict,
+    parser: t.Optional[argparse.ArgumentParser] = None
+) -> None:
+    print(f"Running command: list")
+    print(f"Config: {config}")
 

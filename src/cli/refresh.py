@@ -27,6 +27,7 @@ def create_refresh_subparser(
 
 
 def command_refresh(
+    config: dict,
     args: CLIRefreshNamespace,
     parser: t.Optional[argparse.ArgumentParser] = None
 ) -> None:

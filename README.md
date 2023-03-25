@@ -46,7 +46,11 @@ only a localhost api that could be hit from SSH
 
 ## Development
 ### Requirements
-- NixPkgs && `nix-shell`
+- NixPkgs
+- `nix-shell`
+- `nixos-generate-config`
+- `nixos-rebuild`
+
 
 ### Run
 
@@ -61,6 +65,14 @@ pullnix --version
 **Note:** I couldn't get the develop mode working with Nix...so every change has to be rebuilt by
 exiting `nix-shell` and re-entering it
 
+
+### Testing
+#### Initial Setup
+Before local testing, we need hardware specific configurations to test builds with
+```
+cd tests/fixtures/nixos-configs
+nixos-generate-configs --dir .
+```
 
 ### TODO
 
