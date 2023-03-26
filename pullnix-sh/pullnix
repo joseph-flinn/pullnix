@@ -1,5 +1,5 @@
-NIXOS_CONFIG_DIR=/tmp/pullnix/nixos
-LOG_DIR=/tmp/pullnix/log/pullnix
+NIXOS_CONFIG_DIR=/etc/nixos
+LOG_DIR=/var/log/pullnix
 PULLNIX_LOG=$LOG_DIR/pullnix.log
 GIT_REMOTE=origin
 GIT_BRANCH=main
@@ -15,10 +15,6 @@ fi
 if ! [ -f $PULLNIX_LOG ]; then
     touch $PULLNIX_LOG
 fi
-if ! [ -f $VULNIX_LOG ]; then
-    touch $VULNIX_LOG
-fi
-
 
 log() {
     local level=$1
