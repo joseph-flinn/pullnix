@@ -5,7 +5,7 @@ GIT_REMOTE=origin
 GIT_BRANCH=main
 
 #POLL_TIME=300
-POLL_TIME=15
+POLL_TIME=60
 
 
 # Set up logging files
@@ -16,27 +16,20 @@ if ! [ -f $PULLNIX_LOG ]; then
     touch $PULLNIX_LOG
 fi
 
-log() {
-    local level=$1
-    local message=$2
-
-    echo $(date +"[%Y-%m-%d %H:%M:%S]") $message &>> $PULLNIX_LOG
-}
-
 
 switch() {
-    git pull &>> $PULLNIX_LOG
-    nixos-rebuild build -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix &>> $PULLNIX_LOG
+    git pull
+    nixos-rebuild build -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
 
     if [ $? -eq 0 ]; then
-        log info "\`nixos-rebuild switch\` would go here"
+        echo "\`nixos-rebuild switch\` would go here"
 
         if [ $(git ls-remote &>> /dev/null; echo $?) -eq 0 ]; then
-            log info "git repo connection successful"
+            echo "git repo connection successful"
         else
-            log error "git repo connection failed"
-            log info "Switching back"
-            log info "\`nixos-rebuild switch --rollback\` would go here"
+            echo "git repo connection failed"
+            echo "Switching back"
+            echo "\`nixos-rebuild switch --rollback\` would go here"
         fi
     fi
 }
@@ -45,13 +38,14 @@ switch() {
 cd $NIXOS_CONFIG_DIR
 
 while true; do
-    git fetch &>> $PULLNIX_LOG
+    git fetch
     local_head=$(git rev-parse $GIT_BRANCH)
     remote_head=$(git rev-parse $GIT_REMOTE/$GIT_BRANCH)
 
     if [ $local_head != $remote_head ]; then
-        log info "Out of sync -- local:${local_head:0:7} => remote:${remote_head:0:7}"
+        echo "Out of sync -- local:${local_head:0:7} => remote:${remote_head:0:7}"
         switch
+        echo "----------"
     fi
 
     sleep $POLL_TIME
