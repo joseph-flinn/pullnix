@@ -11,37 +11,12 @@ We need to do a bare metal install of NixOS with pixiecore. The initial config w
 Once the pullnix is running, it will poll the repo every 5 minutes for a configuration update
 
 
-## pullnix Api Features
+## pullnix 
 
 - pull deploy from git repo (think pull deployments in ArgoCD)
 - build validation (script to load from repo. If fails, revert to previous generation)
     + see https://github.com/Infinisil/nixus for example of rollback
-- provide an agent api for status and some manually triggered actions (like forcing a sync)
-- Run a `vulnix` on the build directory before attempting to switch if `secure` is configured for the operator
-
-
-## pullnix CLI Documentation
-
-| command + options | description |
-| ----------------- | ----------- |
-| `list` | lists all of the machines currently being tracked by `pullnix` |
-| `status` | Get the status of all of the machines currently being tracked |
-| `status <target>` | Get the status of all of the machines currently being tracked |
-| `refresh <target>` | Force target operator to check for updates in the git repo |
-| `refresh --all` | Force all operators to check for updates in the git repo |
-| `serve` | Run the api. Intended to be run on an endpoint |
-
-
-Note: instead of having two different apis, the design could be more decentralized where the CLI kicks off any 
-manual commands. Any reports back to a centralized place is really for monitoring and that could/should be shipped
-off to a centralized monitoring stack
-
-
-This could be a shell script that wraps ansible playbooks; similar to `homelab`. This approach 
-would work well if pixiecore is ran with ansible similar to https://github.com/khuedoan/homelab.
-This would also remove the requirement for a public api on each node. It could be constrained to
-only a localhost api that could be hit from SSH
-
+- Run a `vulnix` on the build directory before attempting to switch if `--check-vuln` is configured for the operator
 
 
 ## Development
@@ -75,8 +50,17 @@ nixos-generate-configs --dir .
 ```
 
 ### TODO
+#### Phases
 
-- [ ] Implement the Polling task
-- [ ] Implement `list` in API and CLI
-- [ ] Implement `status` in API and CLI
-- [ ] Implement `refresh` in API and CLI
+- **MVP:** Agent that polls git and builds/switches and auto rolls back if it can no longer access git repo
+- **Phase 1:** Rebuild logging and add remote logging
+- **Phase 2:** Set up dashboard backed from centralized logging system
+- **Phase 3:** Add in vulnerability checking logic
+
+
+#### List
+
+- [ ] Rip out FastAPI and convert to just a long running process
+- [ ] Add git check to see if the agent should rollback
+- [ ] Package for deployment on NixOS
+- [ ] Add in vulnerability checking
