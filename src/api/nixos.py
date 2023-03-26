@@ -1,41 +1,42 @@
-import os
 import subprocess
 
 from time import sleep
 
+from src.api.utils import run_shell
 
-def build(nixos_dir="./nixos") -> bool:
-    print("running: nixos-rebuild build")
-    result = subprocess.run("nixos-rebuild build".split(" "))
 
-    if result.returncode != 0:
+def build(commit_hash, nixos_dir="./") -> bool:
+    try:
+        print(f"running: nixos-rebuild build")
+        run_shell(f"nixos-rebuild build -p {commit_hash[:7]} -I {nixos_dir}/configuration.nix")
+    except Exception as e:
+        print(e)
         return False
     return True
 
 
 def vulnix() -> bool:
-    #os.system("vulnix result")
-    result = subprocess.run("vulnix result".split(" "))
-
-    if result.returncode != 0:
+    try:
+        print(f"running: vulnix")
+        run_shell(f"vulnix result")
+    except Exception as e:
+        print(e)
         return False
     return True
 
 
-def switch(switch_time: int = 30) -> bool:
-    def verify_switch() -> bool:
-        print(f"Verifying switch")
-        sleep(switch_time)
-        #success = os.system("ssh") works
-
-        success = True
-        if not success:
-            os.system("nixos-rebuild switch --rollback")
-
-        return success
-
-    #os.system("nixos-rebuild switch")
+def switch() -> bool:
     print("running: nixos-rebuild switch")
-    return verify_switch()
+    #run_shell("nixos-rebuild test")
+    #print(f"Verifying new system")
+
+    #success = True
+    ##success = os.system("ssh") works
+
+    #if success:
+    #    run_shell("nixos-rebuild switch")
+    #else:
+    #    run_shell("nixos-rebuild --rollback switch")
+    #return success
 
 

@@ -32,6 +32,13 @@ def get_port(
     return 8000
 
 
+def has_required_git_configs(git_config: dict, keys: list) -> bool:
+    for key in keys:
+        if key not in git_config:
+            return False
+    return True
+
+
 def create_serve_subparser(
     parser: argparse.ArgumentParser,
 ) -> argparse.ArgumentParser:
@@ -47,6 +54,11 @@ def create_serve_subparser(
         default="127.0.0.1",
         help="host address to run the agent on (default: 127.0.0.1)"
     )
+    parser.add_argument(
+        "--check-vuln",
+        action="store_true",
+        help="Use vulnix as an additional check before switching to the newest build"
+    )
 
     return parser
 
@@ -56,4 +68,11 @@ def command_serve(
     args: CLIServeNamespace,
     parser: t.Optional[argparse.ArgumentParser] = None
 ) -> None:
-    uvicorn.run(app, host=get_host(config, args), port=get_port(config, args))
+    required_git_configs = ["owner", "repo", "remote", "branch"]
+    if "git" in config and has_required_git_configs(config["git"], required_git_configs):
+        app.config = config
+        app.config["check-vuln"] = args.check_vuln
+        uvicorn.run(app, host=get_host(config, args), port=get_port(config, args))
+    else:
+        print(f"[!] missing required git configs: {', '.join(required_git_configs)}")
+

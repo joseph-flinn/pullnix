@@ -11,7 +11,7 @@ We need to do a bare metal install of NixOS with pixiecore. The initial config w
 Once the pullnix is running, it will poll the repo every 5 minutes for a configuration update
 
 
-## pullnix Features
+## pullnix Api Features
 
 - pull deploy from git repo (think pull deployments in ArgoCD)
 - build validation (script to load from repo. If fails, revert to previous generation)
@@ -20,7 +20,7 @@ Once the pullnix is running, it will poll the repo every 5 minutes for a configu
 - Run a `vulnix` on the build directory before attempting to switch if `secure` is configured for the operator
 
 
-## CLI Documentation
+## pullnix CLI Documentation
 
 | command + options | description |
 | ----------------- | ----------- |

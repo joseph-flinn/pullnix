@@ -1,12 +1,21 @@
-def sync() -> bool:
+import typing as t
+
+from src.api.utils import run_shell
+
+
+def sync(config: dict) -> t.Tuple[bool, str]:
     # Get latest HEAD
-    remote_head = None
-    local_head = "changed"
+    def get_git_head(branch: str) -> str:
+        return str(run_shell(f"git rev-parse {branch}", return_output=True), "UTF-8").strip("\n")
 
-    print(f"Checking remote head")
-    if remote_head != local_head:# IF latest HEAD != local HEAD
-        #git.pull(dest=config_dir)
+    run_shell("git fetch")
+    local_head = get_git_head(config["git"]["branch"])
+    remote_head = get_git_head(f"{config['git']['remote']}/{config['git']['branch']}")
+
+    print(f"Local HEAD: {local_head}\nRemote HEAD: {remote_head}")
+    if remote_head != local_head:
         print(f"pulling new config: {remote_head}")
-        return False
+        run_shell("git pull")
+        return (False, remote_head)
 
-    return True
+    return (True, remote_head)

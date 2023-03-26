@@ -16,7 +16,6 @@ def load_config(config: str) -> dict:
         return json.load(config_file)
 
 
-
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="pullnix")
     parser.add_argument(
@@ -29,7 +28,7 @@ def create_parser() -> argparse.ArgumentParser:
         "--config",
         type=str,
         help="Configuration file for pullnix",
-        default="config.json"
+        default="pullnix.json"
     )
 
     subparsers = parser.add_subparsers(dest="subparser_name")
