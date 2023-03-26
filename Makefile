@@ -1,4 +1,4 @@
 INSTALL ?= install
 
 install:
-	$(INSTALL) -D bin/pullnix $(DESTDIR)$(PREFIX)/bin/pullnix
+	$(INSTALL) -D pullnix-sh/pullnix $(DESTDIR)$(PREFIX)/bin/pullnix
