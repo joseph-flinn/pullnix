@@ -60,6 +60,7 @@ nixos-generate-configs --dir .
 
 #### List
 
+- [ ] POC with bash + [systemd](https://stackoverflow.com/questions/58243712/how-to-install-systemd-service-on-nixos)
 - [ ] Rip out FastAPI and convert to just a long running process
 - [ ] Add git check to see if the agent should rollback
 - [ ] Package for deployment on NixOS

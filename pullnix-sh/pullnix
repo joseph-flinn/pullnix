@@ -1,0 +1,62 @@
+NIXOS_CONFIG_DIR=/tmp/pullnix/nixos
+LOG_DIR=/tmp/pullnix/log/pullnix
+PULLNIX_LOG=$LOG_DIR/pullnix.log
+GIT_REMOTE=origin
+GIT_BRANCH=main
+
+#POLL_TIME=300
+POLL_TIME=15
+
+
+# Set up logging files
+if ! [ -d $LOG_DIR ]; then
+    mkdir $LOG_DIR
+fi
+if ! [ -f $PULLNIX_LOG ]; then
+    touch $PULLNIX_LOG
+fi
+if ! [ -f $VULNIX_LOG ]; then
+    touch $VULNIX_LOG
+fi
+
+
+log() {
+    local level=$1
+    local message=$2
+
+    echo $(date +"[%Y-%m-%d %H:%M:%S]") $message &>> $PULLNIX_LOG
+}
+
+
+switch() {
+    git pull &>> $PULLNIX_LOG
+    nixos-rebuild build -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix &>> $PULLNIX_LOG
+
+    if [ $? -eq 0 ]; then
+        log info "\`nixos-rebuild switch\` would go here"
+
+        if [ $(git ls-remote &>> /dev/null; echo $?) -eq 0 ]; then
+            log info "git repo connection successful"
+        else
+            log error "git repo connection failed"
+            log info "Switching back"
+            log info "\`nixos-rebuild switch --rollback\` would go here"
+        fi
+    fi
+}
+
+
+cd $NIXOS_CONFIG_DIR
+
+while true; do
+    git fetch &>> $PULLNIX_LOG
+    local_head=$(git rev-parse $GIT_BRANCH)
+    remote_head=$(git rev-parse $GIT_REMOTE/$GIT_BRANCH)
+
+    if [ $local_head != $remote_head ]; then
+        log info "Out of sync -- local:${local_head:0:7} => remote:${remote_head:0:7}"
+        switch
+    fi
+
+    sleep $POLL_TIME
+done
