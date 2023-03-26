@@ -5,12 +5,7 @@ GIT_REMOTE=origin
 GIT_BRANCH=main
 
 #POLL_TIME=300
-POLL_TIME=60
-
-
-cmd_git=/run/current-system/sw/bin/git
-cmd_nixos_rebuild=/run/current-system/sw/bin/nixos-rebuild
-
+POLL_TIME=30
 
 
 # Set up logging files
@@ -23,13 +18,13 @@ fi
 
 
 switch() {
-    $cmd_git pull
-    $cmd_nixos_rebuild build -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
+    git pull
+    nixos-rebuild build -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
 
     if [ $? -eq 0 ]; then
         echo "\`nixos-rebuild switch\` would go here"
 
-        if [ $($cmd_git ls-remote &>> /dev/null; echo $?) -eq 0 ]; then
+        if [ $(git ls-remote &>> /dev/null; echo $?) -eq 0 ]; then
             echo "git repo connection successful"
         else
             echo "git repo connection failed"
@@ -43,9 +38,9 @@ switch() {
 cd $NIXOS_CONFIG_DIR
 
 while true; do
-    $cmd_git fetch
-    local_head=$($cmd_git rev-parse $GIT_BRANCH)
-    remote_head=$($cmd_git rev-parse $GIT_REMOTE/$GIT_BRANCH)
+    git fetch
+    local_head=$(git rev-parse $GIT_BRANCH)
+    remote_head=$(git rev-parse $GIT_REMOTE/$GIT_BRANCH)
 
     if [ $local_head != $remote_head ]; then
         echo "Out of sync -- local:${local_head:0:7} => remote:${remote_head:0:7}"
