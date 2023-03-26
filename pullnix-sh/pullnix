@@ -9,12 +9,18 @@ POLL_TIME=30
 
 
 # Set up logging files
+echo "=====Setting up pullnix====="
 if ! [ -d $LOG_DIR ]; then
+    echo "Creating $LOG_DIR"
     mkdir $LOG_DIR
 fi
 if ! [ -f $PULLNIX_LOG ]; then
+    echo "Creating $PULLNIX_LOG"
     touch $PULLNIX_LOG
 fi
+
+echo "NIX_PATH: $NIX_PATH"
+echo "============================"
 
 
 switch() {
