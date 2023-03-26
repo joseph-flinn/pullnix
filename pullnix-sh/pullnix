@@ -44,8 +44,8 @@ cd $NIXOS_CONFIG_DIR
 
 while true; do
     $cmd_git fetch
-    local_head=$(git rev-parse $GIT_BRANCH)
-    remote_head=$(git rev-parse $GIT_REMOTE/$GIT_BRANCH)
+    local_head=$($cmd_git rev-parse $GIT_BRANCH)
+    remote_head=$($cmd_git rev-parse $GIT_REMOTE/$GIT_BRANCH)
 
     if [ $local_head != $remote_head ]; then
         echo "Out of sync -- local:${local_head:0:7} => remote:${remote_head:0:7}"
