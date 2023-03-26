@@ -8,6 +8,9 @@ in
 pkgs.stdenv.mkDerivation {
   name = "pullnix";
   src = src_path;
+  preConfigure = ''
+    export PREFIX=$out
+  '';
   installPhase = ''
     mkdir -p $out/bin
     cp $src/pullnix $out/bin
