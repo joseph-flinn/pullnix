@@ -1,7 +1,12 @@
-NIX_CONFIG_DIR=$1
-PULLNIX_LOG=$2
+NIX_CONFIG_DIR=$0
+PULLNIX_LOG=$1
 
-remote_head=$3
+remote_head=$2
+
+
+echo "NIX_CONFIG_DIR: $NIX_CONFIG_DIR"
+echo "PULLNIX_LOG: $PULLNIX_LOG"
+echo "remote_head: $remote_head"
 
 
 cd $NIX_CONFIG_DIR 
