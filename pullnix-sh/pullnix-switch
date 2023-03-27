@@ -5,6 +5,13 @@ PULLNIX_LOG=$LOG_DIR/$3
 remote_head=$4
 
 
+echo "NIXCONFIG_DIR: $NIX_CONFIG_DIR"
+echo "LOG_DIR: $LOG_DIR"
+echo "PULLNIX_LOG: $PULLNIX_LOG"
+echo "remote_head: $remote_head"
+
+
+
 cd $NIX_CONFIG_DIR 
 
 echo "> nixos-rebuild switch" >> $PULLNIX_LOG

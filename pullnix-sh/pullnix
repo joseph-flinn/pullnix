@@ -45,7 +45,6 @@ while true; do
     if [ $local_head != $remote_head ]; then
         echo "Out of sync -- local:${local_head:0:7} => remote:${remote_head:0:7}"
         runSync
-        echo "----------"
     fi
 
     sleep $POLL_TIME
