@@ -38,10 +38,12 @@ alerting me to when the repo was out of sync, would update the local version, su
 version, then it would print that it would be running `nixos-switch` if it was enabled and not just the 
 `echo` command. 
 
-<details><summary>code snippet</summary>
+<details><summary style="color:grey;"><i>code snippet</i></summary>
 <p>
 
 ```bash
+# bin/pullnix
+
 NIXOS_CONFIG_DIR=/etc/nixos
 LOG_DIR=/var/log/pullnix
 PULLNIX_LOG=$LOG_DIR/pullnix.log
@@ -120,10 +122,12 @@ have been a lot easier to just add a derivation directly in the `./pkgs` directo
 `pullnix`, I then had to update the `fetchGitHub` sha and rev
 
 
-<details><summary>code snippet</summary>
+<details><summary style="color:grey;"><i>code snippet</i></summary>
 <p>
+
 ```bash
 # nixos-configs/pkgs/pullnix/default.nix
+
 { stdenv, fetchFromGitHub, bash}:
 
 stdenv.mkDerivation rec {
@@ -146,6 +150,7 @@ stdenv.mkDerivation rec {
 
 ```nix
 # configuration.nix 
+
 { config, pkgs, ... }:
 let
   pullnix = pkgs.callPackage ../pkgs/pullnix {};
@@ -173,11 +178,13 @@ with this format for a bit. Turns out that this doesn't work in non-NixOS enviro
 just hardcoding the paths for both `PATH` and `NIX_PATH`.
 
 
-<details><summary>code snippet</summary>
+<details><summary style="color:grey;"><i>code snippet</i></summary>
 <p>
 
 
 ```nix
+# configuration.nix
+
 {
   #...
 
@@ -214,11 +221,13 @@ was being run in the `pullnix` process so it was also terminated before it compl
 that would be terminated on restart.
 
 
-<details><summary>code snippet</summary>
+<details><summary style="color:grey;"><i>code snippet</i></summary>
 <p>
+
 
 ```bash
 # bin/pullnix
+
 NIXOS_CONFIG_DIR=/etc/nixos
 LOG_DIR=/var/log/pullnix
 PULLNIX_LOG=$LOG_DIR/pullnix.log
@@ -274,6 +283,7 @@ done
 
 ```bash
 # bin/pullnix-switch
+
 NIX_CONFIG_DIR=$0
 PULLNIX_LOG=$1
 
