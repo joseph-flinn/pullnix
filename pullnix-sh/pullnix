@@ -31,7 +31,7 @@ switch() {
 
     if [ $? -eq 0 ]; then
         echo "> nixos-rebuild switch"
-        nixos-rebuild switch -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
+        nixos-rebuild switch -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix &
 
         if [ $(git ls-remote &>> /dev/null; echo $?) -eq 0 ]; then
             echo "git repo connection successful"
