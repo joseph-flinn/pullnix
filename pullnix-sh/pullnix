@@ -26,9 +26,11 @@ echo "============================"
 
 switch() {
     git pull
+    echo "> nixos-rebuild build"
     nixos-rebuild build -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
 
     if [ $? -eq 0 ]; then
+        echo "> nixos-rebuild switch"
         nixos-rebuild switch -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
 
         if [ $(git ls-remote &>> /dev/null; echo $?) -eq 0 ]; then
