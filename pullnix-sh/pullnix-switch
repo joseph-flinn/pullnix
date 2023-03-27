@@ -1,0 +1,19 @@
+NIX_CONFIG_DIR=$1
+LOG_DIR=$2
+PULLNIX_LOG=$LOG_DIR/$3
+
+remote_head=$4
+
+
+cd $NIX_CONFIG_DIR 
+
+echo "> nixos-rebuild switch" >> $PULLNIX_LOG
+nixos-rebuild switch -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix >> $PULLNIX_LOG 2>&1
+
+if [ $(git ls-remote &>> /dev/null; echo $?) -eq 0 ]; then
+    echo "git repo connection successful" >> $PULLNIX_LOG
+else
+    echo "git repo connection failed" >> $PULLNIX_LOG
+    echo "Switching back" >> $PULLNIX_LOG
+    nixos-rebuild switch --rollback >> $PULLNIX_LOG 2>&1
+fi

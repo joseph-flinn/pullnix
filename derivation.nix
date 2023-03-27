@@ -14,6 +14,7 @@ pkgs.stdenv.mkDerivation {
   installPhase = ''
     mkdir -p $out/bin
     cp $src/pullnix $out/bin
+    cp $src/pullnix-switch $out/bin
     export PATH=$out/bin:$PATH
   '';
 }

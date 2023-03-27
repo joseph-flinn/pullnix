@@ -8,5 +8,6 @@ let
 in mkShell {
   buildInputs = [
     pullnix
+    pullnix-switch
   ];
 }
