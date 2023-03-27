@@ -4,9 +4,13 @@ PULLNIX_LOG=$1
 remote_head=$2
 
 
+echo "====="
+echo "PATH: $PATH"
+echo "NIX_PATH: $NIX_PATH"
 echo "NIX_CONFIG_DIR: $NIX_CONFIG_DIR"
 echo "PULLNIX_LOG: $PULLNIX_LOG"
 echo "remote_head: $remote_head"
+echo "====="
 
 
 cd $NIX_CONFIG_DIR 
