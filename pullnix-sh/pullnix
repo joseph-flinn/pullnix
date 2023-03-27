@@ -24,7 +24,7 @@ echo "PATH: $PATH"
 echo "============================"
 
 
-switch() {
+runSync() {
     git pull
     echo "> nixos-rebuild build"
     nixos-rebuild build -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
@@ -44,7 +44,7 @@ while true; do
 
     if [ $local_head != $remote_head ]; then
         echo "Out of sync -- local:${local_head:0:7} => remote:${remote_head:0:7}"
-        switch
+        runSync
         echo "----------"
     fi
 
