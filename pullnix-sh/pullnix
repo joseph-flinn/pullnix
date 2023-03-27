@@ -29,14 +29,14 @@ switch() {
     nixos-rebuild build -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
 
     if [ $? -eq 0 ]; then
-        echo "\`nixos-rebuild switch\` would go here"
+        nixos-rebuild switch -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
 
         if [ $(git ls-remote &>> /dev/null; echo $?) -eq 0 ]; then
             echo "git repo connection successful"
         else
             echo "git repo connection failed"
             echo "Switching back"
-            echo "\`nixos-rebuild switch --rollback\` would go here"
+            nixos-rebuild switch --rollback
         fi
     fi
 }
