@@ -2,8 +2,7 @@
   pkgs ? import <nixpkgs> {},
 }:
 let
-  src_path = ./pullnix-sh;
-  #pullnix = pkgs.writeShellScriptBin "pullnix" (builtins.readFile "${src_path}/pullnix");
+  src_path = ./bin;
 in
 pkgs.stdenv.mkDerivation {
   name = "pullnix";
