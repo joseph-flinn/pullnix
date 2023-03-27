@@ -30,7 +30,7 @@ runSync() {
     nixos-rebuild build -p $remote_head -I $NIXOS_CONFIG_DIR/configuration.nix
 
     if [ $? -eq 0 ]; then
-        pullnix-switch $NIX_CONFIG_DIR $LOG_DIR $PULLNIX_LOG $remote_head &
+        pullnix-switch $NIX_CONFIG_DIR $PULLNIX_LOG $remote_head &
     fi
 }
 
